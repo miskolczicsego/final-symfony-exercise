@@ -1,24 +1,33 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
+    encoders:
+        JobZ\HomeBundle\Entity\User: plaintext
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+
+    role_hierarchy:
+        ROLE_ADMIN:             ROLE_USER
+        ROLE_SUPER_ADMIN:       [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin: { password: admin, roles: [ 'ROLE_SUPER_ADMIN' ] }
+
+        user:
+            entity:
+                class: HomeBundle:User
+                property: email
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+       main:
+          pattern: ^/
+          anonymous: ~
+          provider: user
+          form_login:
+              login_path: jobz_home_login_login
+              check_path: jobz_home_login_logincheck
+          logout:
+              path: jobz_home_login_logout
+              target: jobz_home_job_index
