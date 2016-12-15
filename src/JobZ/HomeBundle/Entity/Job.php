@@ -2,7 +2,9 @@
 
 namespace JobZ\HomeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Job
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="job")
  * @ORM\Entity(repositoryClass="JobZ\HomeBundle\Repository\JobRepository")
  */
-class Job
+class Job extends Timestampable
 {
     /**
      * @var int
@@ -20,6 +22,21 @@ class Job
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"}, unique=false)
+     * @ORM\Column(length=255)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -43,6 +60,7 @@ class Job
     private $url;
 
     /**
+     * Full-time, part-time, or freelance
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=15)
@@ -57,6 +75,7 @@ class Job
     private $status;
 
     /**
+     * Email of the poster
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
@@ -83,6 +102,14 @@ class Job
      * @ORM\Column(name="company", type="string", length=255)
      */
     private $company;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="jobs")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     */
+    private $category;
 
 
     /**
@@ -303,5 +330,77 @@ class Job
     {
         return $this->status;
     }
-}
 
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Job
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Job
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \JobZ\HomeBundle\Entity\Category $category
+     *
+     * @return Job
+     */
+    public function setCategory(\JobZ\HomeBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+}

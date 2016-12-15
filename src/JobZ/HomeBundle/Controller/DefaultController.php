@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * Class DefaultController
  * @package JobZ\HomeBundle\Controller
- * @Route("/")
  */
 class DefaultController extends Controller
 {

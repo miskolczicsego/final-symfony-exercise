@@ -11,7 +11,6 @@
 
 namespace JobZ\HomeBundle\Controller;
 
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,6 +32,19 @@ class JobController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('@Home/Job/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('HomeBundle:Category')->findAll();
+        $jobRepository = $em->getRepository('HomeBundle:Job');
+        $jobs = array();
+        foreach ($categories as $category) {
+            $jobs[$category->getName()] = $jobRepository->getLastActiveJobsByCategory($category);
+        }
+
+        return $this->render(
+            '@Home/Job/jobs.html.twig',
+            array(
+                'lastjobs' => $jobs
+            )
+        );
     }
 }
