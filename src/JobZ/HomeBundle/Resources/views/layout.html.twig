@@ -24,7 +24,7 @@
             <div class="clearfix"></div>
             <div class="content">
                 <h1>
-                    <a href="{{ path('jobz_home_job_index') }}"><img src="{{ asset('bundles/home/images/jobz.gif') }}"></a>
+                    <a href="{{ path('jobz_home_default_index') }}"><img src="{{ asset('bundles/home/images/jobz.gif') }}"></a>
                 </h1>
                 <div id="sub_header">
                     <div class="post">
@@ -32,7 +32,7 @@
                             Ask for people
                         </h2>
                         <div>
-                            <a href="post.html">Post a Job</a>
+                            <a href="{{ path('jobz_home_post_create') }}">Post a Job</a>
                         </div>
                     </div>
                     <div class="search">

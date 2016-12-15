@@ -1,0 +1,29 @@
+{% extends 'HomeBundle::layout.html.twig' %}
+{% block content %}
+    <div id="job">
+    {% for job in jobs %}
+            <h1>
+                {{ job.company }}
+            </h1>
+            <h2>
+               {{ job.location }}
+            </h2>
+            <h3>
+                {{ job.title }} <small> - {{ job.type }}</small>
+            </h3>
+            <div class="description">
+                {{ job.description }}
+            </div>
+            <h4>
+                How to apply?
+            </h4>
+            <p class="how_to_apply">
+                Send your resume to <a href="{{ job.apply }}">{{ job.apply }}</a>
+            </p>
+            <div class="meta">
+                <small>posted on {{ job.createdAt|date }}</small>
+            </div>
+        <br/>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'HomeBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Post creation</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input class="btn btn-default" type="submit" value="Post">
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('jobz_home_default_index') }}">Back to job list</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -23,7 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * Class JobController
  * @package JobZ\HomeBundle\Controller
  *
- * @Template()
  */
 class JobController extends Controller
 {
@@ -44,6 +43,32 @@ class JobController extends Controller
             '@Home/Job/jobs.html.twig',
             array(
                 'lastjobs' => $jobs
+            )
+        );
+    }
+
+    /**
+     * @param $category
+     * @return Response
+     *
+     * @Route("/{slug}")
+     */
+    public function jobListerAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $category = $em->getRepository('HomeBundle:Category')->findBy(
+            array(
+                'slug' => $slug
+            )
+        );
+
+        $jobsToCategory = $em->getRepository('HomeBundle:Job')->findBy(array('category' => $category));
+
+        return $this->render(
+            'HomeBundle:Job:_job.html.twig',
+            array(
+                'jobs' => $jobsToCategory
             )
         );
     }
