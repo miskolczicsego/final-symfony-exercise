@@ -1,7 +1,8 @@
 <?php
+
 namespace JobZ\AdminBundle\Controller;
 
-use JobZ\HomeBundle\Entity\Information;
+use JobZ\HomeBundle\Entity\Menu;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,23 +11,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /*
- * Class InformationController
+ * Class MenuController
  */
-class InformationController extends Controller
+class MenuController extends Controller
 {
     /**
      * @return array
      *
-     * @Route("/information/")
+     * @Route("/menu/")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $informations = $em->getRepository('HomeBundle:Information')->findAll();
+        $menus = $em->getRepository('HomeBundle:Menu')->findAll();
         return array(
-            'informations' => $informations,
+            'menus' => $menus,
         );
     }
     /**
@@ -34,82 +35,82 @@ class InformationController extends Controller
      *
      * @return array
      *
-     * @Route("/information/new")
+     * @Route("/menu/new")
      * @Method({"GET", "POST"})
      * @Template()
      */
     public function newAction(Request $request)
     {
-        $information = new Information();
-        $form = $this->createForm('JobZ\HomeBundle\Form\InformationType', $information);
+        $menu = new Menu();
+        $form = $this->createForm('JobZ\HomeBundle\Form\MenuType', $menu);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($information);
+            $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute('jobz_admin_information_index');
+            return $this->redirectToRoute('jobz_admin_menu_index');
         }
         return array(
-            'information' => $information,
+            'menu' => $menu,
             'form' => $form->createView(),
         );
     }
     /**
      * @param Request $request
-     * @param Information    $information
+     * @param Menu    $menu
      *
      * @return array
      *
-     * @Route("/information/{id}/edit")
+     * @Route("/menu/{id}/edit")
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction(Request $request, Information $information)
+    public function editAction(Request $request, Menu $menu)
     {
-        $deleteForm = $this->createDeleteForm($information);
-        $editForm = $this->createForm('JobZ\HomeBundle\Form\InformationType', $information);
+        $deleteForm = $this->createDeleteForm($menu);
+        $editForm = $this->createForm('JobZ\HomeBundle\Form\MenuType', $menu);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($information);
+            $em->persist($menu);
             $em->flush();
-            return $this->redirectToRoute('jobz_admin_information_edit', array('id' => $information->getId()));
+            return $this->redirectToRoute('jobz_admin_menu_edit', array('id' => $menu->getId()));
         }
         return array(
-            'information' => $information,
+            'menu' => $menu,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
     /**
      * @param Request $request
-     * @param Information    $information
+     * @param Menu    $menu
      *
      * @return RedirectResponse
      *
-     * @Route("/information/{id}")
+     * @Route("/menu/{id}")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Information $information)
+    public function deleteAction(Request $request, Menu $menu)
     {
-        $form = $this->createDeleteForm($information);
+        $form = $this->createDeleteForm($menu);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($information);
+            $em->remove($menu);
             $em->flush();
         }
-        return $this->redirectToRoute('jobz_admin_information_index');
+        return $this->redirectToRoute('jobz_admin_menu_index');
     }
     /**
-     * @param Information $information
+     * @param Menu $menu
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Information $information)
+    private function createDeleteForm(Menu $menu)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('jobz_admin_information_delete', array('id' => $information->getId())))
+            ->setAction($this->generateUrl('jobz_admin_menu_delete', array('id' => $menu->getId())))
             ->setMethod('DELETE')
             ->getForm();
     }

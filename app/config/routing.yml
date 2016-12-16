@@ -1,6 +1,6 @@
 admin:
     resource: "@AdminBundle/Controller/"
-    type: annotation
+    type:      annotation
     prefix:   /admin
 
 home:

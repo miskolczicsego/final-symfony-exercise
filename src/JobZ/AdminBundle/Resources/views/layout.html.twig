@@ -5,23 +5,13 @@
         <div id="header">
             <div class="nav">
                 <ul>
-                    {% if app.user %}
-                        <li><a href="{{ path('jobz_admin_category_index') }}">Categories</a></li>
+                    <ul>
+                        <li><a href="{{ path('jobz_home_job_index') }}">Back to frontend</a></li>
                         <li><a href="{{ path('jobz_admin_job_index') }}">Jobs</a></li>
-                        <li><a href="#">Information</a></li>
-                        <li><a href="#">Logout</a></li>
-                        <li><a href="#">User: {{ app.security.getToken().getUser().getUsername() }}</a></li>
-                    {% else %}
-                        <li><a href="{{ path('') }}">Login</a></li>
-                        <li><a href="{{ path('') }}">Registration</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="nav-menu">
-                <ul>
-                    <li><a href="{{ path('jobz_home_information_info') }}">About us</a></li>
-                    <li><a href="{{ path('jobz_home_information_info') }}">Posting a job</a></li>
-                    <li><a href="{{ path('jobz_home_information_info') }}">Became a member</a></li>
+                        <li><a href="{{ path('jobz_admin_category_index') }}">Categories</a></li>
+                        <li><a href="{{ path('jobz_admin_information_index') }}">Informations</a></li>
+                        <li><a href="{{ path('jobz_admin_menu_index') }}">Menus</a></li>
+                    </ul>
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -30,57 +20,15 @@
                     <a href="{{ path('jobz_home_job_index') }}"><img src="{{ asset('bundles/home/images/jobz.gif') }}"></a>
                 </h1>
                 <div id="sub_header">
-                    {#<div class="post">#}
-                        {#<h2>#}
-                            {#Ask for people#}
-                        {#</h2>#}
-                        {#<div>#}
-                            {#<a href="{{ path('jobz_home_post_create') }}">Post a Job</a>#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<div class="search">#}
-                        {#<img src="{{ asset('bundles/home/images/ask.png') }}" alt="ask">#}
-                        {#<h2>#}
-                            {#Ask for a job#}
-                        {#</h2>#}
-                        {#<form action="{{ path('jobz_home_job_search') }}" method="get">#}
-                            {#<input name="keywords" id="search_keywords" class="input" type="text"><input value="search" src="{{ asset('bundles/home/images/search.png') }}" class="but_search" type="image">#}
-                            {#<div class="help">#}
-                                {#Enter some keywords (city, country, position, ...)#}
-                            {#</div>#}
-                        {#</form>#}
-                    {#</div>#}
                 </div>
             </div>
         </div>
     </div>
-    {% for flash_message in app.session.flashBag.get('notice') %}
-        <div class="alert alert-info" role="alert">
-            {{ flash_message }}
-        </div>
-    {% endfor %}
     <div id="content">
         <div class="content">
             {% block content %}{% endblock %}
         </div>
     </div>
-    <div id="footer">
-        <div class="content">
-            <ul>
-                <li>
-                    <a href="{{ path('jobz_home_information_info') }}">About us</a>
-                </li>
-                <li class="feed">
-                    <a href="{{ path('jobz_home_information_info') }}">Contact</a>
-                </li>
-                <li>
-                    <a href="{{ path('jobz_home_information_info') }}">JobZ API</a>
-                </li>
-                <li class="last">
-                    <a href="{{ path('jobz_home_information_info') }}">Affiliates</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+
 
 {% endblock %}

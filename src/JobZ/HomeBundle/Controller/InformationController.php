@@ -9,18 +9,23 @@
 namespace JobZ\HomeBundle\Controller;
 
 
+use JobZ\HomeBundle\Entity\Information;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class InformationController extends Controller
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/info")
+     * @Route("/information/{id}")
      */
-    public function infoAction()
+    public function indexAction(Information $information)
     {
-        return $this->render('@Home/Information/information.html.twig');
+        return $this->render(
+            'HomeBundle:Information:information.html.twig',
+            array(
+                'information' => $information
+            )
+        );
     }
 
 }
