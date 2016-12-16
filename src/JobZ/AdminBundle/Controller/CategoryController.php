@@ -62,50 +62,12 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
-        $deleteForm = $this->createDeleteForm($category);
         $editForm = $this->createForm('JobZ\HomeBundle\Form\CategoryType', $category);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('jobz_admin_category_edit', array('id' => $category->getId()));
         }
-        return $this->render('AdminBundle:Category:index.html.twig', array(
-            'category' => $category,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView()));
+        return $this->render('AdminBundle:Category:edit.html.twig', array('category' => $category, 'edit_form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()));
     }
-
-    /**
-     * @param Request $request
-     * @param Category $category
-     *
-     * @return Response
-     *
-     * @Route("/{id}")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Category $category)
-    {
-        $form = $this->createDeleteForm($category);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($category);
-            $em->flush($category);
-        }
-        return $this->redirectToRoute('jobz_admin_category_index');
-    }
-
-    /**
-     * @param Category $category
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Category $category)
-    {
-        return $this->createFormBuilder()->setAction($this->generateUrl('jobz_admin_category_delete', array('id' =>
-                $category->getId())
-        ))->setMethod('DELETE')->getForm();
-    }
-    
 }

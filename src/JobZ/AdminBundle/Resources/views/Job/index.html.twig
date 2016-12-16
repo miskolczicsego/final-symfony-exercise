@@ -1,0 +1,47 @@
+{% extends '@Admin/layout.html.twig' %}
+{% block content %}
+    <h3>Jobs list</h3>
+
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th >Id</th>
+            <th class="text-center">Location</th>
+            <th class="text-center">Position</th>
+            <th class="text-center">Url</th>
+            <th class="text-center">Type</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Apply</th>
+            <th class="text-center">Company</th>
+            <th class="text-center">Title</th>
+            <th class="text-center">Slug</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td><a href="{{ path('jobz_admin_category_show', {id: job.id}) }}">{{ job.id }}</a></td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.position }}</td>
+                <td>{{ job.url }}</td>
+                <td>{{ job.type }}</td>
+                <td>{{ job.email }}</td>
+                <td>{{ job.description }}</td>
+                <td>{{ job.apply }}</td>
+                <td>{{ job.company }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.slug }}</td>
+                <td>
+                    <ul>
+                        <a href="{{ path('jobz_admin_job_show', {id: job.id}) }}" class="btn btn-primary
+                        btn-bg">show</a>
+                        <a href="{{ path('jobz_admin_job_edit', {id: job.id}) }}"  class="btn btn-success
+                        btn-bg">edit</a>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
