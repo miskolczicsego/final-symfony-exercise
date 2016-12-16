@@ -6,8 +6,7 @@
             <div class="category_{{ category }}">
                 <div class="category">
                     <h1>
-                        <a href="{{ path('jobz_home_job_joblister', { slug: category|lower } ) }}">{{ category
-                            }}</a>
+                        <a href="{{ path('jobz_home_job_joblister', { slug: category|lower } ) }}">{{ category }}</a>
                     </h1>
                 </div>
                 {% for job in jobs %}
@@ -18,7 +17,8 @@
                                {{ job.location }}
                             </td>
                             <td class="position">
-                                <a href="../job.html">{{ job.position }}</a>
+                                <a href="{{ path('jobz_home_job_detail', {position: job.position} ) }}">{{ job.position
+                                    }}</a>
                             </td>
                             <td class="company">
                                 {{ job.company }}

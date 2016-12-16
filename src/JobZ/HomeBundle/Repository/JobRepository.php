@@ -28,6 +28,19 @@ class JobRepository extends EntityRepository
         return $qb->getResult();
     }
 
+    public function getJobsBySearchWord($word)
+    {
+        $qb = $this->getQueryBuilder();
+        $qb->where(
+            $qb->expr()->orX(
+                $qb->expr()->like('j.location', ':w'),
+                $qb->expr()->like('j.company', ':w'),
+                $qb->expr()->like('j.position', ':w')
+            )
+        )->setParameter('w', '%' . $word . '%');
+
+        return $qb->getQuery()->getResult();
+    }
     private function getQueryBuilder()
     {
         $em = $this->getEntityManager();

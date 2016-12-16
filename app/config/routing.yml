@@ -1,18 +1,12 @@
+admin:
+    resource: "@AdminBundle/Controller/"
+    type: annotation
+    prefix:   /admin
+
 home:
     resource: "@HomeBundle/Controller"
     type:     annotation
     prefix:   /
 
-model_login:
-    resource: "@HomeBundle/Controller/LoginController.php"
-    type:     annotation
-
-model_registration:
-    resource: "@HomeBundle/Controller/RegisterController.php"
-    type:     annotation
-
-model_job:
-    resource: "@HomeBundle/Controller/JobController.php"
-    type:     annotation
 
 

@@ -6,11 +6,14 @@
             <div class="nav">
                 <ul>
                     {% if app.user %}
-                        <li><a href="{{ path('jobz_home_login_logout') }}">Logout</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Jobs</a></li>
+                        <li><a href="#">Information</a></li>
+                        <li><a href="#">Logout</a></li>
                         <li><a href="#">User: {{ app.security.getToken().getUser().getUsername() }}</a></li>
                     {% else %}
-                        <li><a href="{{ path('jobz_home_login_login') }}">Login</a></li>
-                        <li><a href="{{ path('jobz_home_register_register') }}">Registration</a></li>
+                        <li><a href="{{ path('') }}">Login</a></li>
+                        <li><a href="{{ path('') }}">Registration</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -28,12 +31,12 @@
                 </h1>
                 <div id="sub_header">
                     <div class="post">
-                            <h2>
-                                Ask for people
-                            </h2>
-                            <div>
-                                <a href="{{ path('jobz_home_post_create') }}">Post a Job</a>
-                            </div>
+                        <h2>
+                            Ask for people
+                        </h2>
+                        <div>
+                            <a href="{{ path('jobz_home_post_create') }}">Post a Job</a>
+                        </div>
                     </div>
                     <div class="search">
                         <img src="{{ asset('bundles/home/images/ask.png') }}" alt="ask">

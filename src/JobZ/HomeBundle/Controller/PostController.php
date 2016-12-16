@@ -16,12 +16,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class PostController
+ * @package JobZ\HomeBundle\Controller
+ *
+ * @Route("/new")
+ */
 class PostController extends Controller
 {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("/new")
+     * @Route("/post")
      * @Method({"GET", "POST"})
      */
     public function createAction(Request $request)
@@ -31,9 +37,18 @@ class PostController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($job);
-            $em->flush($job);
-            return $this->redirectToRoute('jobz_home_default_index');
+            if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+                $em->persist($job);
+                $em->flush($job);
+                return $this->redirectToRoute('jobz_home_job_index');
+            } else {
+                $this->addFlash(
+                    'notice',
+                    'Please login to post job'
+                );
+                return $this->redirect($this->generateUrl('jobz_home_login_login'));
+            }
+
         }
         return $this->render('HomeBundle:Post:new.html.twig', array('job' => $job, 'form' => $form->createView(),));
     }

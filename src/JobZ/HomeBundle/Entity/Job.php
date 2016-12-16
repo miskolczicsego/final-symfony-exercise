@@ -70,7 +70,7 @@ class Job extends Timestampable
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=15)
+     * @ORM\Column(name="status", type="integer", length=11)
      */
     private $status;
 
@@ -112,6 +112,10 @@ class Job extends Timestampable
     private $category;
 
 
+    public function __construct()
+    {
+        $this->status = 1;
+    }
     /**
      * Get id
      *
